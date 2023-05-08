@@ -1,0 +1,5 @@
+package com.demo.user.service.impl;
+
+public interface UserService {
+
+}

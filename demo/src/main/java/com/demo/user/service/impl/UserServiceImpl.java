@@ -1,0 +1,59 @@
+package com.demo.user.service.impl;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import com.demo.user.model.User;
+import com.demo.user.model.User_Permissions;
+import com.demo.user.payloads.ApiResponse;
+import com.demo.user.payloads.UserDto;
+import com.demo.user.payloads.User_PermissionsDto;
+import com.demo.user.repo.RoleRepository;
+import com.demo.user.repo.UserRepository;
+import com.demo.user.service.UserService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public ApiResponse addUser(UserDto userDto) {
+		log.info("UserServiceImpl::addUser == started");
+
+		List<User_PermissionsDto> permissionsDtos = userDto.getPermissions();
+		Set<User_Permissions> user_Permissions = permissionsDtos.stream()
+				.map(obj -> modelMapper.map(obj, User_Permissions.class)).collect(Collectors.toSet());
+
+		User user = modelMapper.map(userDto, User.class);
+		user.getRole().setRolePermissions(user_Permissions);
+		user = userRepository.save(user);
+		userDto = modelMapper.map(user, userDto.getClass());
+		
+		log.info("UserServiceImpl::addUser == end");
+		return ApiResponse.builder().data(userDto).timeStamp(LocalDateTime.now()).httpStatus(HttpStatus.CREATED)
+				.build();
+	}
+
+	@Override
+	public ApiResponse getAllUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

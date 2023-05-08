@@ -1,0 +1,10 @@
+package com.demo.user.payloads.enums;
+
+public enum Role_Permissions {
+
+	READ,
+	WRITE,
+	UPDATE,
+	DELETE;
+	
+}

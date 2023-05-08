@@ -1,0 +1,45 @@
+package com.demo.user;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.demo.user.model.User_Permissions;
+import com.demo.user.payloads.enums.Role_Permissions;
+import com.demo.user.repo.PermissionRepository;
+import com.demo.user.repo.RoleRepository;
+
+@SpringBootApplication
+public class DemoApplication implements CommandLineRunner {
+
+	
+	@Autowired
+	private RoleRepository roleRepository;
+	
+	@Autowired
+	private PermissionRepository permissionRepository;
+	
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+	
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		User_Permissions read_permission = new User_Permissions(101, Role_Permissions.READ.getPermission());
+		User_Permissions write_permission = new User_Permissions(101, Role_Permissions.WRITE.getPermission());
+		User_Permissions update_permission = new User_Permissions(101, Role_Permissions.UPDATE.getPermission());
+		User_Permissions delete_permission = new User_Permissions(101, Role_Permissions.DELETE.getPermission());
+		
+	}
+	
+	
+
+}

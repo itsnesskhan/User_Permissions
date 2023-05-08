@@ -1,0 +1,72 @@
+package com.demo.user;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import com.demo.user.model.Roles;
+import com.demo.user.model.User_Permissions;
+import com.demo.user.payloads.enums.PermissionsEnum;
+import com.demo.user.repo.PermissionRepository;
+import com.demo.user.repo.RoleRepository;
+
+@SpringBootApplication
+public class DemoApplication implements CommandLineRunner {
+
+	@Autowired
+	private RoleRepository roleRepository;
+
+	@Autowired
+	private PermissionRepository permissionRepository;
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		User_Permissions read_permission = new User_Permissions(101, PermissionsEnum.READ.getPermission());
+		User_Permissions write_permission = new User_Permissions(102, PermissionsEnum.WRITE.getPermission());
+		User_Permissions update_permission = new User_Permissions(103, PermissionsEnum.UPDATE.getPermission());
+		User_Permissions delete_permission = new User_Permissions(104, PermissionsEnum.DELETE.getPermission());
+
+		User_Permissions[] permissions = { read_permission,
+										   write_permission,
+										   update_permission,
+										   delete_permission 
+										   };
+
+		permissionRepository.saveAll(Arrays.asList(permissions));
+		
+		Roles consumer = new Roles(1001, "consumer");
+		Roles admin = new Roles(1002, "admin");
+		Roles manager = new Roles(1003, "manager");
+		
+		Roles[] roles = {
+				  consumer,
+				  admin,
+				  manager
+		};
+		
+		List<User_Permissions> allPermissions = permissionRepository.findAll();
+		admin.setRolePermissions(new HashSet<>(allPermissions));
+		
+		roleRepository.saveAll(Arrays.asList(roles));
+		
+		
+		
+	}
+
+}

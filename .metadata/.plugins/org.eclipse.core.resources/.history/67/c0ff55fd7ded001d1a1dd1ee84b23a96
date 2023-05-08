@@ -1,0 +1,5 @@
+package com.demo.user.payloads;
+
+public class ApiResponse {
+
+}

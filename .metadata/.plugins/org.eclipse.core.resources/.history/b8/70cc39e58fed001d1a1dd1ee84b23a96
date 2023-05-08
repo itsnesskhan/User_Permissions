@@ -1,0 +1,14 @@
+package com.demo.user.payloads.enums;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+public enum Role_Permissions {
+
+	READ,
+	WRITE,
+	UPDATE,
+	DELETE;
+	
+}

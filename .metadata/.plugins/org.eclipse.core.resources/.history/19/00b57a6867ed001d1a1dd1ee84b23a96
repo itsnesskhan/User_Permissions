@@ -1,0 +1,5 @@
+package com.demo.user.repo;
+
+public interface RoleRepository {
+
+}

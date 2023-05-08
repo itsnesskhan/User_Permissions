@@ -1,0 +1,25 @@
+package com.demo.user.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+@Entity
+public class Roles {
+
+	@Id
+	@Column(name = "role_id")
+	private Integer rid;
+	
+	@Column(name = "role_name")
+	private String rname;
+}

@@ -1,0 +1,20 @@
+package com.demo.user.service.impl;
+
+import com.demo.user.payloads.ApiResponse;
+import com.demo.user.payloads.UserDto;
+
+public class UserServiceImpl implements UserService {
+
+	@Override
+	public ApiResponse addUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ApiResponse getAllUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
